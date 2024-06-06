@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">InternshipProject</string>
+    <string name="fgt_pwd">Forgot Password</string>
+    <string name="sg_name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="lg_pwd">Password</string>
+    <string name="lg_username">Username</string>
+    <string name="sg_button_text">Signup</string>
+    <string name="sg_male_radiobutton">Male</string>
+    <string name="sg_female_radiobutton">Female</string>
+    <string name="sg_mobile">Mobile No.</string>
+</resources>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/ui"
+    tools:context=".SignupActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                style="@style/text_fields"
+                android:id="@+id/signup_name"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white_transparent"
+                android:hint="@string/sg_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"/>
+
+            <EditText
+                style="@style/text_fields"
+                android:id="@+id/signup_email"
+                android:hint="@string/email"
+                />
+
+            <EditText
+                android:id="@+id/signup_mobileno"
+                style="@style/text_fields"
+                android:maxLength="10"
+                android:hint="@string/sg_mobile"
+                />
+
+            <EditText
+                android:id="@+id/signup_username"
+                style="@style/text_fields"
+                android:hint="@string/lg_username"
+                />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/signup_password"
+                    android:maxLength="12"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/white_transparent"
+                    android:hint="@string/lg_pwd"
+                    style="@style/text_fields"/>
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/pwd_eye_icon_hidden"
+                    android:src="@drawable/eye"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    />
+                <ImageView
+                    android:id="@+id/pwd_eye_icon"
+                    android:src="@drawable/visible_eye"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_gravity="end|center"
+                    />
+            </FrameLayout>
+
+           <RadioGroup
+               android:id="@+id/signup_gender"
+               android:layout_marginTop="@dimen/_20sdp"
+               android:layout_marginRight="@dimen/_10sdp"
+               android:layout_marginLeft="@dimen/_10sdp"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               >
+
+               <RadioButton
+                   android:id="@+id/sg_male"
+                   android:text="@string/sg_male_radiobutton"
+                   style="@style/gender_radio_buttons">
+               </RadioButton>
+               <RadioButton
+                   android:id="@+id/sg_female"
+                   android:text="@string/sg_female_radiobutton"
+                   style="@style/gender_radio_buttons">
+
+               </RadioButton>
+           </RadioGroup>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/signup"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="@string/sg_button_text"
+                    android:textSize="@dimen/_20sdp"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/login_butt_cust"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
