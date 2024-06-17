@@ -3,6 +3,9 @@ package in.Project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -24,12 +27,18 @@ public class MainActivity extends AppCompatActivity {
     TextView hp_signup, forgotPassword;
     ImageView eye_icon_hidden, eye_icon;
 
-
+    SQLiteDatabase db;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp = getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
+        db = openOrCreateDatabase("InternshipMay24.db", MODE_PRIVATE, null);
+        String create_db = "CREATE TABLE IF NOT EXISTS USERS(USERID INTEGER PRIMARY KEY, USERNAME VARCHAR(100), NAME VARCHAR(100), " +
+                "EMAIL VARCHAR(100), CONTACT INTEGER(10), PASSWORD VARCHAR(100), CITY VARCHAR(30), GENDER VARCHAR(6))" ;
+        db.execSQL(create_db);
 
         username = findViewById(R.id.main_username);
         password = findViewById(R.id.main_password);
@@ -71,12 +80,27 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else{
-                    Log.d("RESPONSE","Login Successful");
-                    Toast.makeText(MainActivity.this,"Login Succesfully", Toast.LENGTH_LONG).show();
-                    Snackbar.make(vw,"Login successfull", Snackbar.LENGTH_LONG).show();
-                    Intent dashboard_intent = new Intent(MainActivity.this, DashboardActivity
-                            .class);
-                    startActivity(dashboard_intent);
+
+                    String get_username_pwd = "SELECT * FROM USERS WHERE USERNAME='"+username.getText().toString()+"' AND PASSWORD='"+password.getText().toString()+"'";
+                    Cursor check = db.rawQuery(get_username_pwd, null);
+                    if (check.getCount()>0){
+
+                        while (check.moveToNext()){
+                            String sUserId = check.getString(0);
+                            String sUsername = check.getString(1);
+                            String sName = check.getString(2);
+                            String sEmail = check.getString(3);
+                            String sContact = check.getString(4);
+                            String sPassword = check.getString(5);
+                            String sCity = check.getString(6);
+                            String sGender= check.getString(7);
+
+                        }
+
+                        new Common(MainActivity.this, DashboardActivity.class);
+                    }
+
+                    else {new Common(vw, "Invalid Credentials");};
                 }
             }
         });

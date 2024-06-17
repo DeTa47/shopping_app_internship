@@ -53,6 +53,7 @@
                     android:id="@+id/main_password"
                     android:maxLength="12"
                     android:inputType="textPassword"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/white_transparent"
                     android:hint="@string/lg_pwd"
                     android:layout_width="match_parent"

@@ -20,8 +20,8 @@ public class Common {
             Snackbar.make(vw, message, Snackbar.LENGTH_LONG).show();
         }
 
-        /*Common(Context cont, Class<?> any){
-            Intent intent = new Intent(cont, any);
-            startActivity(intent);
-        }*/
+        Common(Context cont, Class<?> nextClass){
+            Intent intent = new Intent(cont, nextClass);
+            cont.startActivity(intent);
+        }
 }

@@ -2,6 +2,8 @@ package in.Project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -24,15 +26,23 @@ public class SignupActivity extends AppCompatActivity {
     ImageView pwd_hidden_icon, pwd_visible_icon, pwd_cph_icon, pwd_cpv_icon;
     Button signup;
 
+    String sGender;
     CheckBox TandC;
     Spinner city;
     String cities [] = {"Select city","Vadodara", "Ahmedabad", "Rajkot", "Surat"};
     String sCity;
 
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        db = openOrCreateDatabase("InternshipMay24.db", MODE_PRIVATE, null);
+        String create_db = "CREATE TABLE IF NOT EXISTS USERS(USERID INTEGER PRIMARY KEY, USERNAME VARCHAR(100), NAME VARCHAR(100), " +
+                "EMAIL VARCHAR(100), CONTACT INTEGER(10), PASSWORD VARCHAR(100), CITY VARCHAR(30), GENDER VARCHAR(6))" ;
+        db.execSQL(create_db);
 
         name = findViewById(R.id.signup_name);
         email = findViewById(R.id.signup_email);
@@ -52,7 +62,7 @@ public class SignupActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(SignupActivity.this, android.R.layout.simple_list_item_checked, cities);
         city.setAdapter(adapter);
 
-        city.getOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
 
@@ -106,6 +116,17 @@ public class SignupActivity extends AppCompatActivity {
                pwd.setTransformationMethod(new PasswordTransformationMethod());
            }
         });
+
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton button = findViewById(checkedId);
+                sGender = button.getText().toString();
+                //new Common(SignupActivity.this, button.getText().toString());
+            }
+        });
+
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,19 +166,22 @@ public class SignupActivity extends AppCompatActivity {
                     new Common(v, "Please select your city");
                 }
                 else{
+
+                    String selectQuery = "SELECT * FROM USERS WHERE USERNAME='"+username.getText().toString()+"' OR EMAIL='"+email.getText().toString()+"' OR CONTACT = '"+mobile.getText().toString()+"'";
+                    Cursor cursor = db.rawQuery(selectQuery, null);
+                    if(cursor.getCount()>0){
+                        new Common(v, "Person already exists");
+                    }
+
+
+                    String insertQuery = "INSERT INTO USERS(USERNAME, NAME, EMAIL, CONTACT, PASSWORD, CITY, GENDER) VALUES('"+username.getText().toString()+"','"+name.getText().toString()+"','"+email.getText().toString()+"','"+mobile.getText().toString()+"','"+pwd.getText().toString()+"','"+sCity+"','"+sGender+"')";
+                    db.execSQL(insertQuery);
                     new Common(v, "Signup Successful");
                     onBackPressed();
                 }
             }
         });
 
-        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton button = findViewById(checkedId);
-                //new Common(SignupActivity.this, button.getText().toString());
-            }
-        });
 
     }
 }
